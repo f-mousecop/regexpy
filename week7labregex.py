@@ -15,16 +15,16 @@ def validate_email(email):
     specifications = re.compile(
         r"""
         ^[a-zA-Z0-9]                       # Prefix
-        [^._-]*([._-][^._-]+){0,3}         # . _ - can only appear 3 times as non-leading/trailing chars
+        (?:[a-zA-Z0-9]*[._-]){0,3}         # . _ - can only appear 3 times as non-leading/trailing chars
         @                                  # @ symbol
         [a-zA-Z0-9]                        # Domain name (e.g., company)
-        [^._-]*([._-][^._-]+){0,1}         # . _ - can only appear 1 as non-leading/trailing chars
+        (?:[a-zA-Z0-9]*[._-]){0,1}         # . _ - can only appear 1 as non-leading/trailing chars
         \.(com|org|co|net|info|xyz|online|app|us|uk|edu|gov|mil)$    # Domain e.g., .com, .org, .net, etc.
         """,
         re.VERBOSE
     )
     
-    if specifications.search(email):
+    if specifications.fullmatch(email):
         return (f'Email is valid: {email}')
     else:
         return (f'Email is not valid: {email}')
@@ -47,7 +47,7 @@ invalid_emails = [
     "end.@test.com",          
     "jane---fletcher@test.com",
     "test@test.o",
-    "first$#last@company"
+    "hello@#%sdj@je.com"
 ]
 
 print("Test cases for validating emails with RegEx\n")
